@@ -1,0 +1,656 @@
+/* ============================================================
+   ОСНОВА
+   ============================================================ */
+
+* {
+    box-sizing: border-box;
+}
+
+
+:root {
+
+    --blue: #1976d2;
+
+    --guard1: #4f9cff;
+
+    --guard2: #63c174;
+
+    --guard3: #ffffff;
+
+    --guard4: #ffd35a;
+
+    --border: rgba(0, 0, 0, 0.08);
+
+}
+
+
+html,
+body {
+
+    margin: 0;
+
+    padding: 0;
+
+    min-height: 100%;
+
+}
+
+
+body {
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+
+    background:
+        var(
+            --tg-theme-bg-color,
+            #f2f2f7
+        );
+
+    color:
+        var(
+            --tg-theme-text-color,
+            #111111
+        );
+
+    -webkit-tap-highlight-color:
+        transparent;
+
+}
+
+
+button {
+
+    font-family: inherit;
+
+}
+
+
+/* ============================================================
+   ПРИЛОЖЕНИЕ
+   ============================================================ */
+
+.app {
+
+    width: 100%;
+
+    max-width: 600px;
+
+    min-height: 100vh;
+
+    margin: 0 auto;
+
+}
+
+
+/* ============================================================
+   ШАПКА
+   ============================================================ */
+
+.header {
+
+    padding:
+        18px
+        16px;
+
+    background:
+        var(
+            --tg-theme-secondary-bg-color,
+            #ffffff
+        );
+
+    border-bottom:
+        1px solid var(--border);
+
+}
+
+
+.header-left {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+}
+
+
+.logo {
+
+    width: 48px;
+
+    height: 48px;
+
+    border-radius: 14px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background:
+        var(--blue);
+
+    font-size: 25px;
+
+}
+
+
+.title {
+
+    font-size: 21px;
+
+    line-height: 1.1;
+
+    font-weight: 800;
+
+}
+
+
+.subtitle {
+
+    margin-top: 4px;
+
+    font-size: 13px;
+
+    opacity: 0.55;
+
+}
+
+
+/* ============================================================
+   MAIN
+   ============================================================ */
+
+main {
+
+    padding:
+        14px;
+
+}
+
+
+/* ============================================================
+   МОЙ КАРАУЛ
+   ============================================================ */
+
+.my-guard {
+
+    padding: 17px;
+
+    margin-bottom: 14px;
+
+    border-radius: 17px;
+
+    background:
+        var(
+            --tg-theme-secondary-bg-color,
+            #ffffff
+        );
+
+    box-shadow:
+        0 3px 12px
+        rgba(0, 0, 0, 0.06);
+
+}
+
+
+.my-guard-label {
+
+    font-size: 13px;
+
+    opacity: 0.55;
+
+}
+
+
+.my-guard-value {
+
+    margin-top: 5px;
+
+    font-size: 21px;
+
+    font-weight: 800;
+
+    color: var(--blue);
+
+}
+
+
+/* ============================================================
+   КАЛЕНДАРЬ
+   ============================================================ */
+
+.calendar-card {
+
+    padding: 13px;
+
+    border-radius: 18px;
+
+    background:
+        var(
+            --tg-theme-secondary-bg-color,
+            #ffffff
+        );
+
+    box-shadow:
+        0 3px 12px
+        rgba(0, 0, 0, 0.06);
+
+}
+
+
+/* ============================================================
+   ПЕРЕКЛЮЧЕНИЕ МЕСЯЦА
+   ============================================================ */
+
+.calendar-header {
+
+    display: grid;
+
+    grid-template-columns:
+        44px
+        1fr
+        44px;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 12px;
+
+}
+
+
+.month-title {
+
+    text-align: center;
+
+    font-size: 18px;
+
+    font-weight: 800;
+
+}
+
+
+.month-button {
+
+    width: 44px;
+
+    height: 44px;
+
+    padding: 0;
+
+    border: none;
+
+    border-radius: 13px;
+
+    background: #e9eef5;
+
+    color: #111111;
+
+    font-size: 30px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+}
+
+
+.month-button:active {
+
+    transform: scale(0.94);
+
+}
+
+
+/* ============================================================
+   ДНИ НЕДЕЛИ
+   ============================================================ */
+
+.weekdays {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(7, 1fr);
+
+    gap: 4px;
+
+    margin-bottom: 5px;
+
+}
+
+
+.weekdays div {
+
+    padding:
+        5px
+        0;
+
+    text-align: center;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    opacity: 0.5;
+
+}
+
+
+/* ============================================================
+   СЕТКА КАЛЕНДАРЯ
+   ============================================================ */
+
+.calendar {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(7, 1fr);
+
+    gap: 5px;
+
+}
+
+
+/* ============================================================
+   ЯЧЕЙКА ДНЯ
+   ============================================================ */
+
+.day {
+
+    min-width: 0;
+
+    min-height: 47px;
+
+    border-radius: 10px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    position: relative;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    color: #111111;
+
+    transition:
+        transform 0.1s ease;
+
+}
+
+
+.day:active {
+
+    transform: scale(0.92);
+
+}
+
+
+.day.empty {
+
+    background: transparent;
+
+    cursor: default;
+
+}
+
+
+/* ============================================================
+   ЦВЕТА КАРАУЛОВ
+   ============================================================ */
+
+.day.guard1,
+.legend-color.guard1 {
+
+    background:
+        var(--guard1);
+
+}
+
+
+.day.guard2,
+.legend-color.guard2 {
+
+    background:
+        var(--guard2);
+
+}
+
+
+.day.guard3,
+.legend-color.guard3 {
+
+    background:
+        var(--guard3);
+
+    border:
+        1px solid #cfcfcf;
+
+}
+
+
+.day.guard4,
+.legend-color.guard4 {
+
+    background:
+        var(--guard4);
+
+}
+
+
+/* ============================================================
+   СЕГОДНЯ
+   ============================================================ */
+
+.day.today {
+
+    box-shadow:
+        inset 0 0 0 3px #ff4545;
+
+}
+
+
+/* ============================================================
+   ВЫБРАННЫЙ ДЕНЬ
+   ============================================================ */
+
+.day.selected {
+
+    box-shadow:
+        inset 0 0 0 3px #111111;
+
+}
+
+
+/* ============================================================
+   ЛЕГЕНДА
+   ============================================================ */
+
+.legend {
+
+    margin-top: 14px;
+
+    padding: 16px;
+
+    border-radius: 17px;
+
+    background:
+        var(
+            --tg-theme-secondary-bg-color,
+            #ffffff
+        );
+
+    box-shadow:
+        0 3px 12px
+        rgba(0, 0, 0, 0.06);
+
+}
+
+
+.legend-title {
+
+    margin-bottom: 12px;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+}
+
+
+.legend-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 10px;
+
+}
+
+
+.legend-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    font-size: 13px;
+
+}
+
+
+.legend-color {
+
+    width: 20px;
+
+    height: 20px;
+
+    flex-shrink: 0;
+
+    border-radius: 6px;
+
+}
+
+
+/* ============================================================
+   ИНФОРМАЦИЯ О ДНЕ
+   ============================================================ */
+
+.selected-day {
+
+    margin-top: 14px;
+
+    padding: 17px;
+
+    border-radius: 17px;
+
+    text-align: center;
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    line-height: 1.7;
+
+    background:
+        var(
+            --tg-theme-secondary-bg-color,
+            #ffffff
+        );
+
+    box-shadow:
+        0 3px 12px
+        rgba(0, 0, 0, 0.06);
+
+}
+
+
+.hidden {
+
+    display: none;
+
+}
+
+
+/* ============================================================
+   МАЛЕНЬКИЕ ЭКРАНЫ
+   ============================================================ */
+
+@media (max-width: 380px) {
+
+    main {
+
+        padding: 10px;
+
+    }
+
+
+    .calendar-card {
+
+        padding: 9px;
+
+    }
+
+
+    .day {
+
+        min-height: 41px;
+
+        font-size: 13px;
+
+    }
+
+
+    .month-title {
+
+        font-size: 16px;
+
+    }
+
+
+    .legend-grid {
+
+        gap: 8px;
+
+    }
+
+}
+
+
+/* ============================================================
+   БОЛЬШИЕ ЭКРАНЫ
+   ============================================================ */
+
+@media (min-width: 601px) {
+
+    body {
+
+        padding-top: 10px;
+
+        padding-bottom: 10px;
+
+    }
+
+}

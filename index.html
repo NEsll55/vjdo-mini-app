@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
+
+    <meta
+        name="theme-color"
+        content="#1976d2"
+    >
+
+    <title>ВЖДО — Смены</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+<div class="app">
+
+
+    <!-- =====================================================
+         ШАПКА
+         ===================================================== -->
+
+    <header class="header">
+
+        <div class="header-left">
+
+            <div class="logo">
+                🛡
+            </div>
+
+            <div>
+
+                <div class="title">
+                    ВЖДО
+                </div>
+
+                <div class="subtitle">
+                    Календарь смен
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <main>
+
+
+        <!-- =================================================
+             ТЕКУЩИЙ КАРАУЛ
+             ================================================= -->
+
+        <section class="my-guard">
+
+            <div class="my-guard-label">
+                Твой текущий караул
+            </div>
+
+            <div
+                id="myGuard"
+                class="my-guard-value"
+            >
+                Караул №3
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             КАЛЕНДАРЬ
+             ================================================= -->
+
+        <section class="calendar-card">
+
+
+            <div class="calendar-header">
+
+                <button
+                    id="prevMonth"
+                    class="month-button"
+                    type="button"
+                    aria-label="Предыдущий месяц"
+                >
+                    ‹
+                </button>
+
+
+                <div
+                    id="monthTitle"
+                    class="month-title"
+                >
+                    Сентябрь 2026
+                </div>
+
+
+                <button
+                    id="nextMonth"
+                    class="month-button"
+                    type="button"
+                    aria-label="Следующий месяц"
+                >
+                    ›
+                </button>
+
+            </div>
+
+
+            <!-- Дни недели -->
+
+            <div class="weekdays">
+
+                <div>Пн</div>
+                <div>Вт</div>
+                <div>Ср</div>
+                <div>Чт</div>
+                <div>Пт</div>
+                <div>Сб</div>
+                <div>Вс</div>
+
+            </div>
+
+
+            <!-- Сам календарь -->
+
+            <div
+                id="calendar"
+                class="calendar"
+            ></div>
+
+
+        </section>
+
+
+        <!-- =================================================
+             ЛЕГЕНДА
+             ================================================= -->
+
+        <section class="legend">
+
+            <div class="legend-title">
+                Обозначения
+            </div>
+
+
+            <div class="legend-grid">
+
+
+                <div class="legend-item">
+
+                    <span class="legend-color guard1"></span>
+
+                    <span>
+                        Караул №1
+                    </span>
+
+                </div>
+
+
+                <div class="legend-item">
+
+                    <span class="legend-color guard2"></span>
+
+                    <span>
+                        Караул №2
+                    </span>
+
+                </div>
+
+
+                <div class="legend-item">
+
+                    <span class="legend-color guard3"></span>
+
+                    <span>
+                        Караул №3
+                    </span>
+
+                </div>
+
+
+                <div class="legend-item">
+
+                    <span class="legend-color guard4"></span>
+
+                    <span>
+                        Караул №4
+                    </span>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             ВЫБРАННАЯ ДАТА
+             ================================================= -->
+
+        <section
+            id="selectedDay"
+            class="selected-day hidden"
+        ></section>
+
+
+    </main>
+
+</div>
+
+
+<!-- Telegram Mini App API -->
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<script src="app.js"></script>
+
+
+</body>
+
+</html>
