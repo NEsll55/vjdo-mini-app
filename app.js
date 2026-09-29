@@ -1,616 +1,538 @@
-/* ============================================================
-   TELEGRAM MINI APP
-   ============================================================ */
+// ============================================================
+// TELEGRAM MINI APP
+// ============================================================
 
-const tg = window.Telegram.WebApp;
+const tg = window.Telegram?.WebApp;
 
-
-tg.ready();
-
-tg.expand();
-
-
-/* ============================================================
-   НАЗВАНИЯ МЕСЯЦЕВ
-   ============================================================ */
-
-const monthNames = [
-
-    "Январь",
-
-    "Февраль",
-
-    "Март",
-
-    "Апрель",
-
-    "Май",
-
-    "Июнь",
-
-    "Июль",
-
-    "Август",
-
-    "Сентябрь",
-
-    "Октябрь",
-
-    "Ноябрь",
-
-    "Декабрь"
-
-];
+if (tg) {
+    tg.ready();
+    tg.expand();
+}
 
 
-/* ============================================================
-   НАЗВАНИЯ КАРАУЛОВ
-   ============================================================ */
+// ============================================================
+// ЭЛЕМЕНТЫ
+// ============================================================
 
-const guardNames = {
+const hasSeals = document.getElementById("has_seals");
+const sealsBlock = document.getElementById("seals_block");
+const sealsCount = document.getElementById("seals_count");
+const sealsContainer = document.getElementById("seals_container");
 
-    1: "Караул №1",
+const hasDamage = document.getElementById("has_damage");
+const damageBlock = document.getElementById("damage_block");
 
-    2: "Караул №2",
+const photosInput = document.getElementById("photos");
+const photoPreview = document.getElementById("photo_preview");
 
-    3: "Караул №3",
-
-    4: "Караул №4"
-
-};
-
-
-/* ============================================================
-   ГРАФИК
-   ============================================================
-
-   27.09.2026 = Караул №3
-
-   Далее:
-
-   28.09.2026 = №4
-   29.09.2026 = №1
-   30.09.2026 = №2
-
-   01.10.2026 = №3
-
-   и так далее.
-   ============================================================ */
-
-const scheduleStart =
-    new Date(
-        2026,
-        8,
-        27
-    );
+const saveButton = document.getElementById("save_button");
+const statusBlock = document.getElementById("status");
 
 
-const scheduleStartGuard = 3;
+// ============================================================
+// ПЛОМБЫ
+// ============================================================
 
+hasSeals.addEventListener("change", () => {
 
-/* ============================================================
-   ТЕКУЩИЙ ОТКРЫТЫЙ МЕСЯЦ
-   ============================================================
+    if (hasSeals.checked) {
 
-   Открываем сразу сентябрь 2026,
-   чтобы проверить исходный график.
+        sealsBlock.classList.remove("hidden");
 
-   Когда приложение будет готово,
-   можно заменить на текущий месяц.
-   ============================================================ */
+        createSealInputs();
 
-let currentDate =
-    new Date(
-        2026,
-        8,
-        27
-    );
+    } else {
 
+        sealsBlock.classList.add("hidden");
 
-/* ============================================================
-   ВЫБРАННАЯ ДАТА
-   ============================================================ */
-
-let selectedDate = null;
-
-
-/* ============================================================
-   ПОЛУЧИТЬ КАРАУЛ ПО ДАТЕ
-   ============================================================ */
-
-function getGuardForDate(date) {
-
-    const dateOnly =
-        new Date(
-            date.getFullYear(),
-            date.getMonth(),
-            date.getDate()
-        );
-
-
-    const startOnly =
-        new Date(
-            scheduleStart.getFullYear(),
-            scheduleStart.getMonth(),
-            scheduleStart.getDate()
-        );
-
-
-    const difference =
-        Math.round(
-            (
-                dateOnly -
-                startOnly
-            ) /
-            (
-                1000 *
-                60 *
-                60 *
-                24
-            )
-        );
-
-
-    let guard =
-        (
-            scheduleStartGuard +
-            difference
-        ) % 4;
-
-
-    /*
-        JavaScript может получить
-        отрицательный остаток.
-
-        Поэтому исправляем.
-    */
-
-    if (guard <= 0) {
-
-        guard += 4;
+        sealsContainer.innerHTML = "";
 
     }
 
-
-    return guard;
-
-}
+});
 
 
-/* ============================================================
-   ФОРМАТ ДАТЫ
-   ============================================================ */
+sealsCount.addEventListener("input", () => {
 
-function formatDate(date) {
+    createSealInputs();
 
-    const day =
-        String(
-            date.getDate()
-        ).padStart(
-            2,
-            "0"
-        );
+});
 
 
-    const month =
-        String(
-            date.getMonth() + 1
-        ).padStart(
-            2,
-            "0"
-        );
+function createSealInputs() {
 
+    if (!hasSeals.checked) {
+        return;
+    }
 
-    const year =
-        date.getFullYear();
-
-
-    return (
-        `${day}.${month}.${year}`
+    let count = parseInt(
+        sealsCount.value
     );
 
-}
+    if (isNaN(count)) {
+        count = 0;
+    }
 
-
-/* ============================================================
-   ПРОВЕРКА СЕГОДНЯШНЕЙ ДАТЫ
-   ============================================================ */
-
-function isToday(date) {
-
-    const today =
-        new Date();
-
-
-    return (
-
-        date.getFullYear()
-        ===
-        today.getFullYear()
-
-        &&
-
-        date.getMonth()
-        ===
-        today.getMonth()
-
-        &&
-
-        date.getDate()
-        ===
-        today.getDate()
-
+    count = Math.max(
+        0,
+        Math.min(count, 100)
     );
 
+    sealsContainer.innerHTML = "";
+
+    for (let i = 1; i <= count; i++) {
+
+        const wrapper =
+            document.createElement("div");
+
+        wrapper.className = "seal-row";
+
+        wrapper.innerHTML = `
+            <label>
+                🔒 Номер пломбы №${i}
+                <input
+                    type="text"
+                    class="seal-number"
+                    placeholder="Введите номер пломбы"
+                >
+            </label>
+        `;
+
+        sealsContainer.appendChild(
+            wrapper
+        );
+    }
 }
 
 
-/* ============================================================
-   ПОКАЗ ТЕКУЩЕГО КАРАУЛА
-   ============================================================ */
+// ============================================================
+// ПОВРЕЖДЕНИЯ
+// ============================================================
 
-function updateMyGuard() {
+hasDamage.addEventListener("change", () => {
 
-    /*
-        Пока Mini App работает
-        независимо от профиля сотрудника.
+    if (hasDamage.checked) {
 
-        В дальнейшем сюда можно
-        передавать guard_id из Python.
-    */
-
-    const today =
-        new Date();
-
-
-    const guard =
-        getGuardForDate(
-            today
+        damageBlock.classList.remove(
+            "hidden"
         );
 
+    } else {
 
-    const element =
+        damageBlock.classList.add(
+            "hidden"
+        );
+
         document.getElementById(
-            "myGuard"
-        );
-
-
-    element.textContent =
-        guardNames[guard];
-
-}
-
-
-/* ============================================================
-   РИСУЕМ КАЛЕНДАРЬ
-   ============================================================ */
-
-function renderCalendar() {
-
-    const calendar =
-        document.getElementById(
-            "calendar"
-        );
-
-
-    const monthTitle =
-        document.getElementById(
-            "monthTitle"
-        );
-
-
-    calendar.innerHTML = "";
-
-
-    const year =
-        currentDate.getFullYear();
-
-
-    const month =
-        currentDate.getMonth();
-
-
-    monthTitle.textContent =
-        `${monthNames[month]} ${year}`;
-
-
-    /* --------------------------------------------------------
-       Первый день месяца
-       -------------------------------------------------------- */
-
-    const firstDay =
-        new Date(
-            year,
-            month,
-            1
-        );
-
-
-    /*
-        JS:
-
-        0 = воскресенье
-        1 = понедельник
-        2 = вторник
-        ...
-
-        Нам нужен:
-
-        0 = понедельник
-        1 = вторник
-        ...
-        6 = воскресенье
-    */
-
-    let startDay =
-        firstDay.getDay() - 1;
-
-
-    if (startDay < 0) {
-
-        startDay = 6;
+            "damage_description"
+        ).value = "";
 
     }
 
-
-    /* --------------------------------------------------------
-       Количество дней
-       -------------------------------------------------------- */
-
-    const daysInMonth =
-        new Date(
-            year,
-            month + 1,
-            0
-        ).getDate();
+});
 
 
-    /* --------------------------------------------------------
-       Пустые клетки
-       -------------------------------------------------------- */
+// ============================================================
+// ПРЕДПРОСМОТР ФОТО
+// ============================================================
 
-    for (
-        let i = 0;
-        i < startDay;
-        i++
-    ) {
+photosInput.addEventListener(
+    "change",
+    () => {
 
-        const empty =
-            document.createElement(
-                "div"
+        photoPreview.innerHTML = "";
+
+        const files =
+            Array.from(
+                photosInput.files
             );
 
+        files.forEach(file => {
 
-        empty.className =
-            "day empty";
+            const reader =
+                new FileReader();
+
+            reader.onload = event => {
+
+                const item =
+                    document.createElement(
+                        "div"
+                    );
+
+                item.className =
+                    "photo-item";
+
+                item.innerHTML = `
+                    <img
+                        src="${event.target.result}"
+                        alt="Фото"
+                    >
+                `;
+
+                photoPreview.appendChild(
+                    item
+                );
+
+            };
+
+            reader.readAsDataURL(file);
+
+        });
+
+    }
+);
 
 
-        calendar.appendChild(
-            empty
-        );
+// ============================================================
+// ПОЛУЧЕНИЕ ДАННЫХ
+// ============================================================
+
+function getFormData() {
+
+    const sealNumbers = [];
+
+    document
+        .querySelectorAll(".seal-number")
+        .forEach(input => {
+
+            const value =
+                input.value.trim();
+
+            if (value) {
+
+                sealNumbers.push(value);
+
+            }
+
+        });
+
+
+    return {
+
+        arrival_time:
+            document.getElementById(
+                "arrival_time"
+            ).value,
+
+        track_number:
+            document.getElementById(
+                "track_number"
+            ).value.trim(),
+
+        train_number:
+            document.getElementById(
+                "train_number"
+            ).value.trim(),
+
+        wagon_number:
+            document.getElementById(
+                "wagon_number"
+            ).value.trim(),
+
+        cargo:
+            document.getElementById(
+                "cargo"
+            ).value.trim(),
+
+        has_seals:
+            hasSeals.checked,
+
+        seals_count:
+            hasSeals.checked
+                ? parseInt(
+                    sealsCount.value
+                ) || 0
+                : 0,
+
+        seal_numbers:
+            sealNumbers,
+
+        twists_count:
+            parseInt(
+                document.getElementById(
+                    "twists_count"
+                ).value
+            ) || 0,
+
+        has_damage:
+            hasDamage.checked,
+
+        damage_description:
+            hasDamage.checked
+                ? document.getElementById(
+                    "damage_description"
+                ).value.trim()
+                : "",
+
+        departure_time:
+            document.getElementById(
+                "departure_time"
+            ).value
+    };
+}
+
+
+// ============================================================
+// ПРОВЕРКА
+// ============================================================
+
+function validateForm(data) {
+
+    if (!data.arrival_time) {
+
+        return "Укажите время прибытия.";
 
     }
 
+    if (!data.track_number) {
 
-    /* --------------------------------------------------------
-       Дни
-       -------------------------------------------------------- */
+        return "Укажите номер пути.";
 
-    for (
-        let dayNumber = 1;
-        dayNumber <= daysInMonth;
-        dayNumber++
-    ) {
+    }
 
-        const date =
-            new Date(
-                year,
-                month,
-                dayNumber
-            );
+    if (!data.train_number) {
 
+        return "Укажите номер поезда.";
 
-        const guard =
-            getGuardForDate(
-                date
-            );
+    }
 
+    if (!data.wagon_number) {
 
-        const day =
-            document.createElement(
-                "div"
-            );
+        return "Укажите номер вагона.";
 
+    }
 
-        day.className =
-            `day guard${guard}`;
+    if (data.has_seals) {
 
+        if (data.seals_count <= 0) {
 
-        /* Сегодня */
+            return "Укажите количество пломб.";
+
+        }
 
         if (
-            isToday(date)
+            data.seal_numbers.length
+            !== data.seals_count
         ) {
 
-            day.classList.add(
-                "today"
+            return (
+                "Введите номер каждой пломбы."
             );
 
         }
 
+    }
 
-        /* Выбранная дата */
+    if (data.has_damage) {
 
-        if (
-            selectedDate
-            &&
-            date.getFullYear()
-            ===
-            selectedDate.getFullYear()
-            &&
-            date.getMonth()
-            ===
-            selectedDate.getMonth()
-            &&
-            date.getDate()
-            ===
-            selectedDate.getDate()
-        ) {
+        if (!data.damage_description) {
 
-            day.classList.add(
-                "selected"
+            return (
+                "Опишите повреждение вагона."
             );
 
         }
 
+    }
 
-        day.textContent =
-            dayNumber;
+    if (!data.departure_time) {
 
+        return (
+            "Укажите время отправления."
+        );
 
-        day.title =
-            `${formatDate(date)} — ${guardNames[guard]}`;
+    }
 
-
-        /* ----------------------------------------------------
-           Нажатие на день
-           ---------------------------------------------------- */
-
-        day.addEventListener(
-            "click",
-            function () {
-
-                selectedDate =
-                    date;
+    return null;
+}
 
 
-                showSelectedDay(
-                    date,
-                    guard
+// ============================================================
+// СОХРАНЕНИЕ
+// ============================================================
+
+saveButton.addEventListener(
+    "click",
+    async () => {
+
+        statusBlock.textContent = "";
+        statusBlock.className = "status";
+
+        const data = getFormData();
+
+        const error =
+            validateForm(data);
+
+        if (error) {
+
+            statusBlock.textContent =
+                "❌ " + error;
+
+            statusBlock.classList.add(
+                "error"
+            );
+
+            return;
+        }
+
+
+        saveButton.disabled = true;
+
+        saveButton.textContent =
+            "⏳ Сохраняем...";
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/wagon-check",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify(data)
+                    }
                 );
 
 
-                renderCalendar();
+            const result =
+                await response.json();
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    result.detail
+                    || "Ошибка сервера"
+                );
 
             }
-        );
 
 
-        calendar.appendChild(
-            day
-        );
+            statusBlock.textContent =
+                "✅ Проверка сохранена!";
+
+            statusBlock.classList.add(
+                "success"
+            );
+
+
+            if (tg) {
+
+                tg.HapticFeedback?.notificationOccurred(
+                    "success"
+                );
+
+            }
+
+
+            // Очищаем форму
+            resetForm();
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            statusBlock.textContent =
+                "❌ " + error.message;
+
+            statusBlock.classList.add(
+                "error"
+            );
+
+
+            if (tg) {
+
+                tg.HapticFeedback?.notificationOccurred(
+                    "error"
+                );
+
+            }
+
+        } finally {
+
+            saveButton.disabled = false;
+
+            saveButton.textContent =
+                "✅ Сохранить проверку";
+
+        }
 
     }
-
-}
-
-
-/* ============================================================
-   ПОКАЗ ВЫБРАННОГО ДНЯ
-   ============================================================ */
-
-function showSelectedDay(
-    date,
-    guard
-) {
-
-    const element =
-        document.getElementById(
-            "selectedDay"
-        );
+);
 
 
-    element.classList.remove(
+// ============================================================
+// ОЧИСТКА ФОРМЫ
+// ============================================================
+
+function resetForm() {
+
+    document
+        .getElementById(
+            "arrival_time"
+        ).value = "";
+
+    document
+        .getElementById(
+            "track_number"
+        ).value = "";
+
+    document
+        .getElementById(
+            "train_number"
+        ).value = "";
+
+    document
+        .getElementById(
+            "wagon_number"
+        ).value = "";
+
+    document
+        .getElementById(
+            "cargo"
+        ).value = "";
+
+    hasSeals.checked = false;
+
+    sealsBlock.classList.add(
         "hidden"
     );
 
+    sealsCount.value = 0;
 
-    element.innerHTML =
-        `
-        📅 ${formatDate(date)}
-        <br>
-        🛡 ${guardNames[guard]}
-        `;
+    sealsContainer.innerHTML = "";
+
+    document
+        .getElementById(
+            "twists_count"
+        ).value = 0;
+
+    hasDamage.checked = false;
+
+    damageBlock.classList.add(
+        "hidden"
+    );
+
+    document
+        .getElementById(
+            "damage_description"
+        ).value = "";
+
+    document
+        .getElementById(
+            "departure_time"
+        ).value = "";
+
+    photosInput.value = "";
+
+    photoPreview.innerHTML = "";
 
 }
-
-
-/* ============================================================
-   ПРЕДЫДУЩИЙ МЕСЯЦ
-   ============================================================ */
-
-document
-    .getElementById(
-        "prevMonth"
-    )
-    .addEventListener(
-        "click",
-        function () {
-
-            currentDate.setMonth(
-                currentDate.getMonth() - 1
-            );
-
-
-            selectedDate =
-                null;
-
-
-            document
-                .getElementById(
-                    "selectedDay"
-                )
-                .classList.add(
-                    "hidden"
-                );
-
-
-            renderCalendar();
-
-        }
-    );
-
-
-/* ============================================================
-   СЛЕДУЮЩИЙ МЕСЯЦ
-   ============================================================ */
-
-document
-    .getElementById(
-        "nextMonth"
-    )
-    .addEventListener(
-        "click",
-        function () {
-
-            currentDate.setMonth(
-                currentDate.getMonth() + 1
-            );
-
-
-            selectedDate =
-                null;
-
-
-            document
-                .getElementById(
-                    "selectedDay"
-                )
-                .classList.add(
-                    "hidden"
-                );
-
-
-            renderCalendar();
-
-        }
-    );
-
-
-/* ============================================================
-   ЗАПУСК
-   ============================================================ */
-
-updateMyGuard();
-
-renderCalendar();

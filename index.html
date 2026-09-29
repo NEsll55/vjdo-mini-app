@@ -1,9 +1,6 @@
 <!DOCTYPE html>
-
 <html lang="ru">
-
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -11,228 +8,233 @@
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     >
 
-    <meta
-        name="theme-color"
-        content="#1976d2"
-    >
+    <title>ВЖДО — Проверка вагона</title>
 
-    <title>ВЖДО — Смены</title>
-
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
-
+    <link rel="stylesheet" href="style.css">
 </head>
-
 
 <body>
 
 <div class="app">
 
-
-    <!-- =====================================================
-         ШАПКА
-         ===================================================== -->
-
     <header class="header">
-
-        <div class="header-left">
-
-            <div class="logo">
-                🛡
-            </div>
-
-            <div>
-
-                <div class="title">
-                    ВЖДО
-                </div>
-
-                <div class="subtitle">
-                    Календарь смен
-                </div>
-
-            </div>
-
-        </div>
-
+        <div class="header-title">🚂 Проверка вагона</div>
+        <div class="header-subtitle">ВЖДО</div>
     </header>
 
+    <main class="container">
 
-    <main>
+        <!-- ОСНОВНАЯ ИНФОРМАЦИЯ -->
+
+        <section class="card">
+
+            <h2>🚆 Информация о поезде</h2>
+
+            <label>
+                Время прибытия
+                <input
+                    type="time"
+                    id="arrival_time"
+                >
+            </label>
+
+            <label>
+                Номер пути
+                <input
+                    type="text"
+                    id="track_number"
+                    placeholder="Например: 5"
+                >
+            </label>
+
+            <label>
+                Номер поезда
+                <input
+                    type="text"
+                    id="train_number"
+                    placeholder="Например: 1234"
+                >
+            </label>
+
+            <label>
+                Номер вагона
+                <input
+                    type="text"
+                    id="wagon_number"
+                    placeholder="Например: 54872341"
+                >
+            </label>
+
+        </section>
 
 
-        <!-- =================================================
-             ТЕКУЩИЙ КАРАУЛ
-             ================================================= -->
+        <!-- ГРУЗ -->
 
-        <section class="my-guard">
+        <section class="card">
 
-            <div class="my-guard-label">
-                Твой текущий караул
+            <h2>📦 Груз</h2>
+
+            <label>
+                Что находится в вагоне?
+                <textarea
+                    id="cargo"
+                    rows="3"
+                    placeholder="Например: зерно, уголь, пшеница..."
+                ></textarea>
+            </label>
+
+        </section>
+
+
+        <!-- ПЛОМБЫ -->
+
+        <section class="card">
+
+            <h2>🔒 Пломбы</h2>
+
+            <label class="checkbox-row">
+
+                <input
+                    type="checkbox"
+                    id="has_seals"
+                >
+
+                <span>Пломбы имеются</span>
+
+            </label>
+
+            <div id="seals_block" class="hidden">
+
+                <label>
+                    Количество пломб
+                    <input
+                        type="number"
+                        id="seals_count"
+                        min="0"
+                        max="100"
+                        value="0"
+                    >
+                </label>
+
+                <div id="seals_container"></div>
+
             </div>
 
-            <div
-                id="myGuard"
-                class="my-guard-value"
+        </section>
+
+
+        <!-- ЗАКРУТКИ -->
+
+        <section class="card">
+
+            <h2>🔩 Закрутки</h2>
+
+            <label>
+                Количество закруток
+                <input
+                    type="number"
+                    id="twists_count"
+                    min="0"
+                    max="100"
+                    value="0"
+                >
+            </label>
+
+        </section>
+
+
+        <!-- ПОВРЕЖДЕНИЯ -->
+
+        <section class="card">
+
+            <h2>⚠️ Повреждение вагона</h2>
+
+            <label class="checkbox-row">
+
+                <input
+                    type="checkbox"
+                    id="has_damage"
+                >
+
+                <span>Обнаружено повреждение</span>
+
+            </label>
+
+            <div id="damage_block" class="hidden">
+
+                <label>
+                    Опишите повреждение
+                    <textarea
+                        id="damage_description"
+                        rows="5"
+                        placeholder="Например: повреждена пломба, вмятина на боковой стенке, повреждён люк..."
+                    ></textarea>
+                </label>
+
+            </div>
+
+        </section>
+
+
+        <!-- ОТПРАВЛЕНИЕ -->
+
+        <section class="card">
+
+            <h2>🚂 Отправление</h2>
+
+            <label>
+                Время отправления
+                <input
+                    type="time"
+                    id="departure_time"
+                >
+            </label>
+
+        </section>
+
+
+        <!-- ФОТО -->
+
+        <section class="card">
+
+            <h2>📷 Фотографии</h2>
+
+            <p class="hint">
+                При необходимости прикрепите фотографии вагона,
+                пломб или повреждений.
+            </p>
+
+            <input
+                type="file"
+                id="photos"
+                accept="image/*"
+                multiple
             >
-                Караул №3
-            </div>
+
+            <div id="photo_preview"></div>
 
         </section>
 
 
-        <!-- =================================================
-             КАЛЕНДАРЬ
-             ================================================= -->
+        <!-- КНОПКА -->
 
-        <section class="calendar-card">
+        <button
+            id="save_button"
+            class="save-button"
+        >
+            ✅ Сохранить проверку
+        </button>
 
-
-            <div class="calendar-header">
-
-                <button
-                    id="prevMonth"
-                    class="month-button"
-                    type="button"
-                    aria-label="Предыдущий месяц"
-                >
-                    ‹
-                </button>
-
-
-                <div
-                    id="monthTitle"
-                    class="month-title"
-                >
-                    Сентябрь 2026
-                </div>
-
-
-                <button
-                    id="nextMonth"
-                    class="month-button"
-                    type="button"
-                    aria-label="Следующий месяц"
-                >
-                    ›
-                </button>
-
-            </div>
-
-
-            <!-- Дни недели -->
-
-            <div class="weekdays">
-
-                <div>Пн</div>
-                <div>Вт</div>
-                <div>Ср</div>
-                <div>Чт</div>
-                <div>Пт</div>
-                <div>Сб</div>
-                <div>Вс</div>
-
-            </div>
-
-
-            <!-- Сам календарь -->
-
-            <div
-                id="calendar"
-                class="calendar"
-            ></div>
-
-
-        </section>
-
-
-        <!-- =================================================
-             ЛЕГЕНДА
-             ================================================= -->
-
-        <section class="legend">
-
-            <div class="legend-title">
-                Обозначения
-            </div>
-
-
-            <div class="legend-grid">
-
-
-                <div class="legend-item">
-
-                    <span class="legend-color guard1"></span>
-
-                    <span>
-                        Караул №1
-                    </span>
-
-                </div>
-
-
-                <div class="legend-item">
-
-                    <span class="legend-color guard2"></span>
-
-                    <span>
-                        Караул №2
-                    </span>
-
-                </div>
-
-
-                <div class="legend-item">
-
-                    <span class="legend-color guard3"></span>
-
-                    <span>
-                        Караул №3
-                    </span>
-
-                </div>
-
-
-                <div class="legend-item">
-
-                    <span class="legend-color guard4"></span>
-
-                    <span>
-                        Караул №4
-                    </span>
-
-                </div>
-
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             ВЫБРАННАЯ ДАТА
-             ================================================= -->
-
-        <section
-            id="selectedDay"
-            class="selected-day hidden"
-        ></section>
-
+        <div
+            id="status"
+            class="status"
+        ></div>
 
     </main>
 
 </div>
 
-
-<!-- Telegram Mini App API -->
-
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-
 <script src="app.js"></script>
 
-
 </body>
-
 </html>
