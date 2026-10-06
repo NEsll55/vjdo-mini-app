@@ -2,9 +2,11 @@
     box-sizing: border-box;
 }
 
+html,
 body {
     margin: 0;
     padding: 0;
+    min-height: 100%;
 
     font-family:
         -apple-system,
@@ -14,235 +16,463 @@ body {
         Arial,
         sans-serif;
 
-    background: #f1f3f5;
+    background: #f2f3f7;
     color: #202124;
+}
+
+body {
+    -webkit-tap-highlight-color: transparent;
+}
+
+button {
+    font-family: inherit;
 }
 
 .app {
     min-height: 100vh;
 }
 
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+
 .header {
-    background: #1976d2;
-    color: white;
-
-    padding: 18px 16px;
-
-    text-align: center;
-
-    box-shadow:
-        0 2px 8px rgba(0, 0, 0, 0.15);
-}
-
-.header-title {
-    font-size: 22px;
-    font-weight: 700;
-}
-
-.header-subtitle {
-    margin-top: 4px;
-
-    font-size: 14px;
-
-    opacity: 0.9;
-}
-
-.container {
-    width: 100%;
-    max-width: 650px;
-
-    margin: 0 auto;
-
-    padding: 14px;
-}
-
-.card {
-    background: white;
-
-    border-radius: 14px;
-
-    padding: 16px;
-
-    margin-bottom: 14px;
-
-    box-shadow:
-        0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-.card h2 {
-    margin: 0 0 16px;
-
-    font-size: 18px;
-}
-
-label {
-    display: block;
-
-    margin-bottom: 14px;
-
-    font-size: 14px;
-
-    font-weight: 600;
-}
-
-input[type="text"],
-input[type="number"],
-input[type="time"],
-textarea {
-    display: block;
-
-    width: 100%;
-
-    margin-top: 7px;
-
-    padding: 13px;
-
-    border: 1px solid #d0d5da;
-
-    border-radius: 10px;
-
-    font-size: 16px;
-
-    background: #fff;
-
-    outline: none;
-}
-
-textarea {
-    resize: vertical;
-
-    min-height: 80px;
-}
-
-input:focus,
-textarea:focus {
-    border-color: #1976d2;
-
-    box-shadow:
-        0 0 0 2px rgba(25, 118, 210, 0.12);
-}
-
-.checkbox-row {
     display: flex;
-
     align-items: center;
 
     gap: 10px;
 
-    cursor: pointer;
+    background: #ffffff;
 
-    margin-bottom: 0;
+    padding: 10px 14px;
+
+    border-bottom: 1px solid #e5e7eb;
 }
 
-.checkbox-row input {
-    width: 22px;
-    height: 22px;
+.header-icon {
+    width: 30px;
+    height: 30px;
 
-    accent-color: #1976d2;
-}
-
-.hidden {
-    display: none;
-}
-
-.hint {
-    margin-top: -5px;
-    margin-bottom: 14px;
-
-    color: #6b7280;
-
-    font-size: 13px;
-
-    line-height: 1.4;
-}
-
-.seal-row {
-    margin-top: 10px;
-
-    padding: 10px;
-
-    background: #f6f8fa;
-
-    border-radius: 10px;
-}
-
-.seal-row label {
-    margin-bottom: 0;
-}
-
-.save-button {
-    width: 100%;
-
-    border: none;
-
-    border-radius: 12px;
-
-    padding: 16px;
-
-    margin: 5px 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     background: #1976d2;
 
-    color: white;
+    border-radius: 6px;
 
     font-size: 17px;
+}
+
+.header-title {
+    font-size: 14px;
+    font-weight: 700;
+
+    color: #202124;
+}
+
+.header-subtitle {
+    margin-top: 1px;
+
+    font-size: 10px;
+
+    color: #8a8f98;
+}
+
+
+/* ============================================================
+   CONTAINER
+   ============================================================ */
+
+.container {
+    width: 100%;
+    max-width: 430px;
+
+    margin: 0 auto;
+
+    padding: 8px;
+}
+
+
+/* ============================================================
+   TODAY
+   ============================================================ */
+
+.today-card {
+    background: #ffffff;
+
+    border-radius: 10px;
+
+    padding: 9px 11px;
+
+    margin-bottom: 7px;
+
+    box-shadow:
+        0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.today-label {
+    font-size: 10px;
+
+    color: #8a8f98;
+}
+
+.today-date {
+    margin-top: 2px;
+
+    font-size: 14px;
 
     font-weight: 700;
+}
+
+.today-guard {
+    margin-top: 4px;
+
+    display: inline-block;
+
+    padding: 3px 7px;
+
+    border-radius: 5px;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    background: #e8f1ff;
+
+    color: #1769aa;
+}
+
+
+/* ============================================================
+   CALENDAR
+   ============================================================ */
+
+.calendar-card {
+    background: #ffffff;
+
+    border-radius: 10px;
+
+    padding: 8px;
+
+    box-shadow:
+        0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+
+/* ============================================================
+   CALENDAR HEADER
+   ============================================================ */
+
+.calendar-header {
+    display: grid;
+
+    grid-template-columns: 32px 1fr 32px;
+
+    align-items: center;
+
+    margin-bottom: 6px;
+}
+
+.month-title {
+    text-align: center;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+.month-button {
+    width: 28px;
+    height: 28px;
+
+    padding: 0;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background: #f3f4f6;
+
+    color: #555;
+
+    font-size: 20px;
+
+    line-height: 1;
 
     cursor: pointer;
 }
 
-.save-button:active {
-    transform: scale(0.98);
+.month-button:active {
+    transform: scale(0.94);
 }
 
-.save-button:disabled {
-    background: #9ca3af;
 
-    cursor: not-allowed;
-}
+/* ============================================================
+   WEEKDAYS
+   ============================================================ */
 
-.status {
-    text-align: center;
-
-    padding: 10px;
-
-    margin-bottom: 30px;
-
-    font-size: 15px;
-
-    font-weight: 600;
-}
-
-.status.success {
-    color: #15803d;
-}
-
-.status.error {
-    color: #dc2626;
-}
-
-#photo_preview {
+.weekdays {
     display: grid;
 
     grid-template-columns:
-        repeat(3, 1fr);
+        repeat(7, 1fr);
 
-    gap: 8px;
+    gap: 3px;
 
-    margin-top: 12px;
+    margin-bottom: 3px;
 }
 
-.photo-item {
+.weekdays div {
+    text-align: center;
+
+    font-size: 8px;
+
+    color: #9ca3af;
+
+    font-weight: 600;
+
+    padding: 2px 0;
+}
+
+
+/* ============================================================
+   CALENDAR GRID
+   ============================================================ */
+
+.calendar {
+    display: grid;
+
+    grid-template-columns:
+        repeat(7, 1fr);
+
+    gap: 3px;
+}
+
+
+/* ============================================================
+   DAY
+   ============================================================ */
+
+.day {
+    min-height: 28px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 5px;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    color: #202124;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.1s,
+        box-shadow 0.1s;
+}
+
+.day:active {
+    transform: scale(0.93);
+}
+
+
+/* Пустые клетки */
+
+.empty-day {
+    background: transparent;
+
+    cursor: default;
+}
+
+
+/* ============================================================
+   COLORS
+   ============================================================ */
+
+.guard-1 {
+    background: #5aa9ff;
+}
+
+.guard-2 {
+    background: #57c878;
+}
+
+.guard-3 {
+    background: #ffd45a;
+}
+
+.guard-4 {
+    background: #ff6b6b;
+}
+
+
+/* ============================================================
+   TODAY
+   ============================================================ */
+
+.day.today {
+    box-shadow:
+        inset 0 0 0 2px #1976d2;
+
+    font-weight: 800;
+
     position: relative;
 }
 
-.photo-item img {
-    width: 100%;
 
-    height: 100px;
+/* Маленькая точка */
 
-    object-fit: cover;
+.day.today::after {
+    content: "";
 
-    border-radius: 8px;
+    position: absolute;
+
+    bottom: 2px;
+
+    width: 3px;
+    height: 3px;
+
+    border-radius: 50%;
+
+    background: #1976d2;
+}
+
+
+/* ============================================================
+   SELECTED DAY
+   ============================================================ */
+
+.day.selected {
+    box-shadow:
+        0 0 0 2px #111827;
+}
+
+
+/* ============================================================
+   LEGEND
+   ============================================================ */
+
+.legend-card {
+    background: #ffffff;
+
+    border-radius: 10px;
+
+    padding: 9px 11px;
+
+    margin-top: 7px;
+
+    box-shadow:
+        0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.legend-title {
+    font-size: 10px;
+
+    font-weight: 700;
+
+    color: #6b7280;
+
+    margin-bottom: 7px;
+}
+
+.legend {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 6px;
+}
+
+.legend-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    font-size: 9px;
+
+    color: #4b5563;
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+
+    border-radius: 3px;
+
+    flex-shrink: 0;
+}
+
+
+/* ============================================================
+   INFO
+   ============================================================ */
+
+.info-card {
+    background: #ffffff;
+
+    border-radius: 10px;
+
+    padding: 8px 11px;
+
+    margin-top: 7px;
+
+    margin-bottom: 10px;
+
+    box-shadow:
+        0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.info-row {
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    font-size: 9px;
+
+    color: #6b7280;
+
+    margin: 3px 0;
+}
+
+.info-row strong {
+    color: #202124;
+}
+
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 360px) {
+
+    .container {
+        padding: 6px;
+    }
+
+    .day {
+        min-height: 26px;
+
+        font-size: 9px;
+    }
+
+    .calendar {
+        gap: 2px;
+    }
+
+    .weekdays {
+        gap: 2px;
+    }
+
 }
